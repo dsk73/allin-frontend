@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../services/api";
+import { resolveImageUrl } from "../utils/media";
 
 import ProductGallery from "../components/product/ProductGallery";
 import Reviews from "../components/product/Reviews";
@@ -15,7 +16,6 @@ function ProductDetail() {
   const addItem = useCartStore((s) => s.addItem);
   const openCart = useCartStore((s) => s.openCart);
 
-  /* ================= FETCH PRODUCT ================= */
   useEffect(() => {
     api
       .get(
@@ -26,37 +26,27 @@ function ProductDetail() {
       )
       .then((res) => {
         setProduct(res.data.data[0]);
-      })
-      .catch((err) => {
-        console.error("Product fetch error:", err);
       });
   }, [slug]);
 
   if (!product) {
     return (
-      <div className="h-screen flex items-center justify-center text-white/60">
-        Loading product…
-      </div>
+      <div className="h-screen flex items-center justify-center">Loading…</div>
     );
   }
 
-  /* ================= CART IMAGE ================= */
   const primaryMedia =
     product.product_medias?.find((m) => m.isPrimary) ||
     product.product_medias?.[0];
 
-  const imagePath =
+  const imageUrl = resolveImageUrl(
     primaryMedia?.ProductMedia?.formats?.medium?.url ||
-    primaryMedia?.ProductMedia?.url ||
-    null;
+      primaryMedia?.ProductMedia?.url,
+  );
 
-  const imageUrl = imagePath ? `http://localhost:1337${imagePath}` : null;
-
-  /* ================= REVIEWS ================= */
   const approvedReviews =
     product.product_reviews?.filter((r) => r.approved) || [];
 
-  /* ================= CART ================= */
   const handleAddToCart = () => {
     addItem({
       id: product.id,
@@ -69,20 +59,15 @@ function ProductDetail() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-20">
-      {/* ================= PRODUCT TOP ================= */}
       <div className="grid md:grid-cols-2 gap-16">
         <ProductGallery medias={product.product_medias || []} />
 
         <div>
           <h1 className="text-4xl font-bold">{product.name}</h1>
-
           <p className="text-green-400 text-2xl font-bold mt-4">
             ₹{product.price}
           </p>
-
-          <p className="text-white/70 mt-6 leading-relaxed">
-            {product.description}
-          </p>
+          <p className="text-white/70 mt-6">{product.description}</p>
 
           {product.category && (
             <div className="mt-4 text-sm text-white/50">
@@ -93,22 +78,16 @@ function ProductDetail() {
 
           <button
             onClick={handleAddToCart}
-            className="mt-10 px-10 py-4 bg-green-400 text-black 
-                       rounded-full font-semibold text-lg 
-                       hover:bg-green-300 transition"
+            className="mt-10 px-10 py-4 bg-green-400 text-black rounded-full font-semibold"
           >
             Add to Cart
           </button>
         </div>
       </div>
 
-      {/* ================= REVIEWS ================= */}
       <Reviews reviews={approvedReviews} />
-
-      {/* ================= REVIEW FORM ================= */}
       <ReviewForm productId={product.id} />
 
-      {/* ================= RELATED PRODUCTS ================= */}
       {product.category && (
         <RelatedProducts
           categoryId={product.category.id}

@@ -42,18 +42,12 @@ function Home() {
 
       <main className="max-w-7xl mx-auto px-6">
         {/* ================= FEATURED ================= */}
-        <section className="mt-24">
+        <section className="mt-4">
           <FeaturedProducts products={products} />
         </section>
 
         {/* ================= CATEGORY BLOCKS ================= */}
-        <section className="mt-32">
-          <h2 className="text-3xl font-bold mb-3">Shop by Category</h2>
-          <p className="text-white/60 mb-10 max-w-xl">
-            Premium poker merchandise designed for players who know when to go
-            ALLiN.
-          </p>
-
+        <section className="mt-4">
           <CategoryBlocks
             categories={categories}
             onSelect={setActiveCategory}
@@ -61,7 +55,7 @@ function Home() {
         </section>
 
         {/* ================= ALL PRODUCTS ================= */}
-        <section className="mt-36 pb-32">
+        <section className="mt-16 pb-32">
           <div className="mb-10">
             <h2 className="text-3xl font-bold mb-2">Explore the Collection</h2>
             <p className="text-white/60">Built for players who never fold.</p>

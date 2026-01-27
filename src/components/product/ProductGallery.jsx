@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { resolveImageUrl } from "../../utils/media";
 
 function ProductGallery({ medias = [] }) {
   const images = medias.map((m) => m.ProductMedia).filter(Boolean);
+  const [activeId, setActiveId] = useState(null);
 
-  // store only ID, not full object
-  const [activeId, setActiveId] = useState(images[0]?.id || null);
+  useEffect(() => {
+    if (images.length) setActiveId(images[0].id);
+  }, [images]);
 
   if (!images.length) {
     return (
@@ -19,20 +22,20 @@ function ProductGallery({ medias = [] }) {
 
   const activeImage = images.find((img) => img.id === activeId) || images[0];
 
-  const activeUrl =
+  const activeUrl = resolveImageUrl(
     activeImage.formats?.large?.url ||
-    activeImage.formats?.medium?.url ||
-    activeImage.url;
+      activeImage.formats?.medium?.url ||
+      activeImage.url,
+  );
 
   return (
     <div className="flex flex-col gap-6">
-      {/* ================= MAIN IMAGE ================= */}
       <div
         className="group relative w-full aspect-square bg-[#111] 
                       rounded-2xl overflow-hidden border border-white/10"
       >
         <img
-          src={`http://localhost:1337${activeUrl}`}
+          src={activeUrl}
           alt={activeImage.name}
           className="w-full h-full object-cover 
                      transition-transform duration-300 
@@ -40,11 +43,11 @@ function ProductGallery({ medias = [] }) {
         />
       </div>
 
-      {/* ================= THUMBNAILS ================= */}
       <div className="flex gap-4">
         {images.map((img) => {
-          const thumb =
-            img.formats?.thumbnail?.url || img.formats?.small?.url || img.url;
+          const thumb = resolveImageUrl(
+            img.formats?.thumbnail?.url || img.formats?.small?.url || img.url,
+          );
 
           return (
             <button
@@ -58,7 +61,7 @@ function ProductGallery({ medias = [] }) {
                 } transition`}
             >
               <img
-                src={`http://localhost:1337${thumb}`}
+                src={thumb}
                 alt={img.name}
                 className="w-full h-full object-cover"
               />

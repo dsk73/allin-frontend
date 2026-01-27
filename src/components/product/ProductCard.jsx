@@ -1,5 +1,5 @@
-//src/components/product/ProductCard.jsx
 import { Link } from "react-router-dom";
+import { resolveImageUrl } from "../../utils/media";
 
 function ProductCard({ product }) {
   const { name, price, launchStatus, slug, product_medias = [] } = product;
@@ -11,9 +11,7 @@ function ProductCard({ product }) {
     primaryMedia?.ProductMedia?.formats?.medium?.url ||
     primaryMedia?.ProductMedia?.url;
 
-  const imageUrl = imagePath
-    ? `http://localhost:1337${imagePath}`
-    : "/no-image.png";
+  const imageUrl = resolveImageUrl(imagePath);
 
   return (
     <Link
@@ -22,12 +20,10 @@ function ProductCard({ product }) {
                  border border-white/10 hover:border-green-400/60 
                  transition transform hover:-translate-y-1"
     >
-      {/* Image */}
       <div className="aspect-square bg-black">
         <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
       </div>
 
-      {/* Content */}
       <div className="p-4">
         <h3 className="text-lg font-semibold text-white">{name}</h3>
 
@@ -40,8 +36,8 @@ function ProductCard({ product }) {
         <div className="mt-4">
           <span
             className="inline-block w-full text-center py-2 rounded-lg 
-                       bg-green-400 text-black font-semibold 
-                       hover:bg-green-300 transition"
+                           bg-green-400 text-black font-semibold 
+                           hover:bg-green-300 transition"
           >
             View Product
           </span>
