@@ -1,3 +1,4 @@
+// src/components/product/ReviewForm.jsx
 import { useState } from "react";
 import { api } from "../../services/api";
 
@@ -10,7 +11,6 @@ function ReviewForm({ productId, onSubmitted }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!name || !comment) return;
 
     setLoading(true);
@@ -22,25 +22,38 @@ function ReviewForm({ productId, onSubmitted }) {
           rating,
           comment,
           approved: false,
-          product: productId,
+
+          // ✅ STRAPI v5 RELATION LINK (THIS FIXES IT)
+          product: {
+            connect: [productId],
+          },
+
+          // Draft & Publish ON → keep unpublished
+          publishedAt: null,
         },
       });
 
       setSuccess(true);
+
+      // Keep success message visible for 3 seconds
+      setTimeout(() => {
+        setSuccess(false);
+        if (onSubmitted) onSubmitted();
+      }, 3000);
+
       setName("");
       setRating(5);
       setComment("");
-
-      if (onSubmitted) onSubmitted();
     } catch (err) {
-      console.error("Review submit error", err);
+      console.error("❌ Review submit error:", err);
+      alert("Failed to submit review. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mt-20">
+    <div>
       <h3 className="text-2xl font-bold mb-6">Write a Review</h3>
 
       {success && (
@@ -58,13 +71,13 @@ function ReviewForm({ productId, onSubmitted }) {
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400"
+          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3"
         />
 
         <select
           value={rating}
           onChange={(e) => setRating(Number(e.target.value))}
-          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400"
+          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3"
         >
           {[5, 4, 3, 2, 1].map((r) => (
             <option key={r} value={r}>
@@ -78,12 +91,12 @@ function ReviewForm({ productId, onSubmitted }) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={4}
-          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-green-400"
+          className="w-full bg-black border border-white/20 rounded-lg px-4 py-3"
         />
 
         <button
           disabled={loading}
-          className="px-8 py-3 bg-green-400 text-black rounded-full font-semibold hover:bg-green-300 transition disabled:opacity-50"
+          className="px-8 py-3 bg-green-400 text-black rounded-full font-semibold disabled:opacity-50"
         >
           {loading ? "Submitting..." : "Submit Review"}
         </button>
