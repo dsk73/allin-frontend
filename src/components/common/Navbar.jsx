@@ -1,3 +1,4 @@
+//src/components/common/Navbar.jsx
 import { Link } from "react-router-dom";
 import logo from "/logo.png";
 import useCartStore from "../../store/cartStore";
