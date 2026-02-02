@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "/logo.png";
 import useCartStore from "../../store/cartStore";
 
@@ -8,15 +9,19 @@ function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="ALLiN" className="h-12 w-auto" />
-        </div>
+        </Link>
 
         <nav className="hidden md:flex gap-8 text-lg text-white/70">
-          <span className="hover:text-white cursor-pointer">Home</span>
-          <span className="hover:text-white cursor-pointer">Shop</span>
-          <span className="hover:text-white cursor-pointer">Articles</span>
-          <span className="hover:text-white cursor-pointer">Contact</span>
+          <Link to="/" className="hover:text-white">
+            Home
+          </Link>
+          <Link to="/shop" className="hover:text-white">
+            Shop
+          </Link>
+          <span className="cursor-not-allowed opacity-40">Articles</span>
+          <span className="cursor-not-allowed opacity-40">Contact</span>
         </nav>
 
         <button
