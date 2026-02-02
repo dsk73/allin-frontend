@@ -1,9 +1,9 @@
-//src/pages/Category.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../services/api";
 
 import ProductCard from "../components/product/ProductCard";
+import Breadcrumbs from "../components/common/Breadcrumbs";
 
 function Category() {
   const { slug } = useParams();
@@ -41,7 +41,15 @@ function Category() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20">
+    <div className="max-w-7xl mx-auto px-6 py-6">
+      <Breadcrumbs
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Shop", to: "/shop" },
+          { label: category.name, to: `/category/${category.slug}` },
+        ]}
+      />
+
       <h1 className="text-4xl font-bold mb-4">{category.name}</h1>
 
       {products.length === 0 ? (

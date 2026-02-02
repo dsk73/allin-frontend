@@ -1,19 +1,17 @@
-// src/pages/Shop.jsx
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
 
 import ProductCard from "../components/product/ProductCard";
 import CategoryFilter from "../components/shop/CategoryFilter";
+import Breadcrumbs from "../components/common/Breadcrumbs";
 
 function Shop() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
 
-  // 🔍 Search + Sort state
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("latest");
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,54 +36,47 @@ function Shop() {
     );
   }
 
-  /* ================= FILTER BY CATEGORY ================= */
   let visibleProducts = activeCategory
     ? products.filter((p) => p.category && p.category.id === activeCategory)
     : [...products];
 
-  /* ================= SEARCH ================= */
   if (search.trim()) {
     visibleProducts = visibleProducts.filter((p) =>
       p.name.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
-  /* ================= SORT ================= */
   visibleProducts.sort((a, b) => {
-    if (sort === "latest") {
-      return b.id - a.id;
-    }
-
-    if (sort === "price_low") {
-      return (a.price || 0) - (b.price || 0);
-    }
-
-    if (sort === "price_high") {
-      return (b.price || 0) - (a.price || 0);
-    }
-
+    if (sort === "latest") return b.id - a.id;
+    if (sort === "price_low") return (a.price || 0) - (b.price || 0);
+    if (sort === "price_high") return (b.price || 0) - (a.price || 0);
     if (sort === "rating") {
-      const avgRating = (p) => {
-        const approved = p.product_reviews?.filter((r) => r.approved) || [];
-        if (!approved.length) return 0;
-        return approved.reduce((sum, r) => sum + r.rating, 0) / approved.length;
+      const avg = (p) => {
+        const r = p.product_reviews?.filter((x) => x.approved) || [];
+        if (!r.length) return 0;
+        return r.reduce((s, x) => s + x.rating, 0) / r.length;
       };
-      return avgRating(b) - avgRating(a);
+      return avg(b) - avg(a);
     }
-
     return 0;
   });
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-6">
+      <Breadcrumbs
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Shop", to: "/shop" },
+        ]}
+      />
+
       <h1 className="text-4xl font-bold mb-4">Shop</h1>
       <p className="text-white/60 mb-8">
         Explore premium poker merchandise crafted for players who go ALL IN.
       </p>
 
-      {/* ================= CONTROLS ================= */}
+      {/* CONTROLS */}
       <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between mb-10">
-        {/* Search */}
         <input
           type="text"
           placeholder="Search products..."
@@ -94,7 +85,6 @@ function Shop() {
           className="w-full md:w-1/3 bg-black border border-white/20 rounded-full px-5 py-3 focus:outline-none focus:border-green-400"
         />
 
-        {/* Sort */}
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value)}
@@ -107,14 +97,12 @@ function Shop() {
         </select>
       </div>
 
-      {/* CATEGORY FILTER */}
       <CategoryFilter
         categories={categories}
         activeCategory={activeCategory}
         onChange={setActiveCategory}
       />
 
-      {/* PRODUCTS GRID */}
       {visibleProducts.length === 0 ? (
         <p className="text-white/50 mt-10">No products found.</p>
       ) : (
