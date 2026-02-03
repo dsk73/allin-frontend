@@ -1,3 +1,4 @@
+//src/pages/ProductDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../services/api";
@@ -129,11 +130,23 @@ function ProductDetail() {
               </div>
             )}
 
-            {/* MAIN CTA (scroll trigger) */}
+            {/* ================= PRIMARY CTA ================= */}
             <button
               id="main-add-to-cart"
               onClick={handleAddToCart}
-              className="mt-10 px-10 py-4 bg-green-400 text-black rounded-full font-semibold"
+              className="
+                mt-10 w-full md:w-auto
+                px-12 py-5
+                bg-green-400 text-black
+                rounded-full
+                font-bold text-lg
+                shadow-lg shadow-green-400/30
+                transition-all duration-300
+                hover:bg-green-300 hover:-translate-y-0.5
+                active:translate-y-0 active:shadow-md
+                focus-visible:outline-none
+                focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black
+              "
             >
               Add to Cart
             </button>
