@@ -1,4 +1,4 @@
-//src/pages/ProductDetail.jsx
+// src/pages/ProductDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../services/api";
@@ -77,7 +77,6 @@ function ProductDetail() {
     openCart();
   };
 
-  /* ================= SCROLL ================= */
   const scrollToReviews = () => {
     const el = document.getElementById("reviews");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -86,7 +85,6 @@ function ProductDetail() {
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* ================= BREADCRUMBS ================= */}
         <Breadcrumbs
           items={[
             { label: "Home", to: "/" },
@@ -100,16 +98,17 @@ function ProductDetail() {
         />
 
         {/* ================= TOP ================= */}
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 gap-16 mt-6 items-start">
           <div className="relative">
             <ProductBadge type={badgeType} />
             <ProductGallery medias={product.product_medias || []} />
           </div>
 
-          <div>
+          {/* ================= INFO CARD ================= */}
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8">
             <h1 className="text-4xl font-bold">{product.name}</h1>
 
-            <div className="mt-2">
+            <div className="mt-3">
               <ProductRating
                 reviews={approvedReviews}
                 size="lg"
@@ -117,11 +116,13 @@ function ProductDetail() {
               />
             </div>
 
-            <p className="text-green-400 text-2xl font-bold mt-4">
+            <p className="text-green-400 text-3xl font-bold mt-6">
               ₹{product.price}
             </p>
 
-            <p className="text-white/70 mt-6">{product.description}</p>
+            <p className="text-white/70 mt-6 leading-relaxed">
+              {product.description}
+            </p>
 
             {product.category && (
               <div className="mt-4 text-sm text-white/50">
@@ -130,12 +131,12 @@ function ProductDetail() {
               </div>
             )}
 
-            {/* ================= PRIMARY CTA ================= */}
+            {/* ================= CTA ================= */}
             <button
               id="main-add-to-cart"
               onClick={handleAddToCart}
               className="
-                mt-10 w-full md:w-auto
+                mt-10 w-full
                 px-12 py-5
                 bg-green-400 text-black
                 rounded-full
@@ -145,7 +146,8 @@ function ProductDetail() {
                 hover:bg-green-300 hover:-translate-y-0.5
                 active:translate-y-0 active:shadow-md
                 focus-visible:outline-none
-                focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                focus-visible:ring-2 focus-visible:ring-green-400
+                focus-visible:ring-offset-2 focus-visible:ring-offset-black
               "
             >
               Add to Cart
@@ -154,7 +156,7 @@ function ProductDetail() {
         </div>
 
         {/* ================= REVIEWS ================= */}
-        <div id="reviews" className="mt-24">
+        <div id="reviews" className="mt-28">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-2xl font-bold">
               Reviews ({approvedReviews.length})
@@ -193,7 +195,6 @@ function ProductDetail() {
           )}
         </div>
 
-        {/* ================= RELATED ================= */}
         {product.category && (
           <RelatedProducts
             categoryId={product.category.id}
@@ -202,7 +203,6 @@ function ProductDetail() {
         )}
       </div>
 
-      {/* ================= STICKY ADD TO CART ================= */}
       <StickyAddToCart product={product} onAddToCart={handleAddToCart} />
     </>
   );
