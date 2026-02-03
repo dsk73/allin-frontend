@@ -1,3 +1,4 @@
+//src/pages/Home.jsx
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../services/products";
 import { fetchCategories } from "../services/categories";
