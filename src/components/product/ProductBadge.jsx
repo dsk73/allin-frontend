@@ -16,8 +16,18 @@ function ProductBadge({ type }) {
 
   return (
     <span
-      className={`absolute top-3 left-3 z-10 px-3 py-1 text-xs font-bold 
-                  rounded-full tracking-wide ${styles[type]}`}
+      className={`
+        absolute
+        top-3 left-3 md:top-3 md:left-3
+        z-10
+        px-3 py-1
+        text-xs md:text-sm
+        font-bold tracking-wide
+        rounded-full
+        backdrop-blur-sm
+        shadow-md
+        ${styles[type]}
+      `}
     >
       {labels[type]}
     </span>
