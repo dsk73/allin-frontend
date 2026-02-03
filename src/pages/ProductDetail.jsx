@@ -105,10 +105,17 @@ function ProductDetail() {
           </div>
 
           {/* ================= INFO CARD ================= */}
-          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-8">
-            <h1 className="text-4xl font-bold">{product.name}</h1>
+          <div
+            className="
+              bg-white/[0.02] md:bg-white/[0.03]
+              md:border md:border-white/10
+              rounded-2xl
+              p-5 md:p-8
+            "
+          >
+            <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
 
-            <div className="mt-3">
+            <div className="mt-2 md:mt-3">
               <ProductRating
                 reviews={approvedReviews}
                 size="lg"
@@ -116,16 +123,16 @@ function ProductDetail() {
               />
             </div>
 
-            <p className="text-green-400 text-3xl font-bold mt-6">
+            <p className="text-green-400 text-2xl md:text-3xl font-bold mt-4 md:mt-6">
               ₹{product.price}
             </p>
 
-            <p className="text-white/70 mt-6 leading-relaxed">
+            <p className="text-white/70 mt-4 md:mt-6 leading-relaxed text-sm md:text-base">
               {product.description}
             </p>
 
             {product.category && (
-              <div className="mt-4 text-sm text-white/50">
+              <div className="mt-3 md:mt-4 text-sm text-white/50">
                 Category:{" "}
                 <span className="text-white">{product.category.name}</span>
               </div>
@@ -136,11 +143,13 @@ function ProductDetail() {
               id="main-add-to-cart"
               onClick={handleAddToCart}
               className="
-                mt-10 w-full
-                px-12 py-5
+                mt-6 md:mt-10
+                w-full
+                px-10 md:px-12
+                py-4 md:py-5
                 bg-green-400 text-black
                 rounded-full
-                font-bold text-lg
+                font-bold text-base md:text-lg
                 shadow-lg shadow-green-400/30
                 transition-all duration-300
                 hover:bg-green-300 hover:-translate-y-0.5
@@ -156,7 +165,7 @@ function ProductDetail() {
         </div>
 
         {/* ================= REVIEWS ================= */}
-        <div id="reviews" className="mt-28">
+        <div id="reviews" className="mt-24 md:mt-28">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-2xl font-bold">
               Reviews ({approvedReviews.length})
