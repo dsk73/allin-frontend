@@ -1,3 +1,4 @@
+// src/store/cartStore.js
 import { create } from "zustand";
 
 const useCartStore = create((set, get) => ({
@@ -23,6 +24,22 @@ const useCartStore = create((set, get) => ({
       });
     }
   },
+
+  // ✅ NEW: increase quantity
+  increaseQty: (id) =>
+    set({
+      items: get().items.map((i) =>
+        i.id === id ? { ...i, qty: i.qty + 1 } : i,
+      ),
+    }),
+
+  // ✅ NEW: decrease quantity (remove if qty === 1)
+  decreaseQty: (id) =>
+    set({
+      items: get()
+        .items.map((i) => (i.id === id ? { ...i, qty: i.qty - 1 } : i))
+        .filter((i) => i.qty > 0),
+    }),
 
   removeItem: (id) =>
     set({
