@@ -7,7 +7,7 @@ function FeaturedProducts({ products }) {
   if (featured.length === 0) return null;
 
   return (
-    <section className="mt-24">
+    <section className="mt-8">
       {/* ================= HEADER ================= */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold">Featured Drops</h2>
@@ -19,21 +19,18 @@ function FeaturedProducts({ products }) {
       {/* ================= HORIZONTAL SCROLL ================= */}
       <div
         className="
-          flex gap-6
-          overflow-x-auto
-          pb-4
-          -mx-6 px-6
-          snap-x snap-mandatory
-          scrollbar-hide
-        "
+    flex gap-6
+    overflow-x-auto
+    pb-4
+    -mx-6 px-6
+    snap-x snap-mandatory
+    scrollbar-hide
+  "
       >
         {featured.map((product) => (
           <div
             key={product.id}
-            className="
-              min-w-[75%] sm:min-w-[45%] md:min-w-[32%] lg:min-w-[24%]
-              snap-start
-            "
+            className="min-w-[60%] md:min-w-[25%] snap-start"
           >
             <ProductCard product={product} />
           </div>

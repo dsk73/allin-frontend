@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
 import CategoryTabs from "../components/category/CategoryTabs";
 import Breadcrumbs from "../components/common/Breadcrumbs";
+import ProductRating from "../components/product/ProductRating";
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -138,9 +139,11 @@ function Shop() {
                       <h3 className="text-sm font-semibold line-clamp-2">
                         {product.name}
                       </h3>
-                      <p className="text-xs text-white/60 mt-1">
-                        ⭐ {product.product_reviews?.length || 0} reviews
-                      </p>
+
+                      {/* ⭐ Rating – same as desktop */}
+                      <div className="mt-1 scale-[0.9] origin-left">
+                        <ProductRating reviews={product.product_reviews} />
+                      </div>
                     </div>
 
                     <div>

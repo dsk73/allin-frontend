@@ -8,6 +8,7 @@ import Hero from "../components/hero/Hero";
 import CategoryTabs from "../components/category/CategoryTabs";
 import ProductCard from "../components/product/ProductCard";
 import FeaturedProducts from "../components/home/FeaturedProducts";
+import ProductRating from "../components/product/ProductRating";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ function Home() {
     ? products.filter((p) => p.category && p.category.id === activeCategory)
     : products;
 
-  const homeProducts = filteredProducts.slice(0, 12);
+  const homeProducts = filteredProducts.slice(0, 10);
 
   if (loading) {
     return (
@@ -48,9 +49,12 @@ function Home() {
           <FeaturedProducts products={products} />
         </section>
 
+        {/* ================= DIVIDER ================= */}
+        <div className="mt-12 border-t border-white/4 pt-12" />
+
         {/* ================= EXPLORE COLLECTION ================= */}
-        <section className="mt-20 pb-32">
-          <div className="mb-10">
+        <section className="pb-32">
+          <div className="mb-8">
             <h2 className="text-3xl font-bold mb-2">Explore the Collection</h2>
             <p className="text-white/60">Built for players who never fold.</p>
           </div>
@@ -61,7 +65,7 @@ function Home() {
             onChange={setActiveCategory}
           />
 
-          {/* MOBILE: row layout (custom, no ProductCard) */}
+          {/* ================= MOBILE ROW LAYOUT ================= */}
           <div className="mt-14 space-y-4 md:hidden">
             {homeProducts.map((product) => {
               const primaryMedia =
@@ -73,12 +77,12 @@ function Home() {
                 primaryMedia?.ProductMedia?.url;
 
               return (
-                <a
+                <Link
                   key={product.id}
-                  href={`/product/${product.slug}`}
+                  to={`/product/${product.slug}`}
                   className="flex gap-4 bg-[#111] rounded-2xl
-                   border border-white/10 p-3
-                   hover:border-green-400/60 transition"
+                             border border-white/10 p-3
+                             hover:border-green-400/60 transition"
                 >
                   {/* IMAGE */}
                   <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-black">
@@ -96,11 +100,9 @@ function Home() {
                         {product.name}
                       </h3>
 
-                      <div className="mt-1">
-                        {/* reuse rating component */}
-                        <span className="text-xs text-white/70">
-                          ⭐ {product.product_reviews?.length || 0} reviews
-                        </span>
+                      {/* ⭐ Rating – same logic as desktop */}
+                      <div className="mt-1 scale-[0.9] origin-left">
+                        <ProductRating reviews={product.product_reviews} />
                       </div>
                     </div>
 
@@ -115,19 +117,19 @@ function Home() {
                       </p>
                     </div>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
 
-          {/* DESKTOP: grid layout */}
-          <div className="hidden md:grid mt-14 grid-cols-3 lg:grid-cols-4 gap-10">
+          {/* ================= DESKTOP GRID ================= */}
+          <div className="hidden md:grid mt-8 grid-cols-3 lg:grid-cols-5 gap-10">
             {homeProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
-          {/* VIEW MORE */}
+          {/* ================= VIEW MORE ================= */}
           <div className="mt-16 text-center">
             <Link
               to="/shop"
