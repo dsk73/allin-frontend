@@ -1,3 +1,4 @@
+//src/components/home/CategoryBlocks.jsx
 function CategoryBlocks({ categories, onSelect }) {
   return (
     <section className="mt-24">

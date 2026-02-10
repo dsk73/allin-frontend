@@ -1,3 +1,4 @@
+// src/components/home/FeaturedProducts.jsx
 import ProductCard from "../product/ProductCard";
 
 function FeaturedProducts({ products }) {
@@ -7,16 +8,35 @@ function FeaturedProducts({ products }) {
 
   return (
     <section className="mt-24">
-      <div className="mb-10">
+      {/* ================= HEADER ================= */}
+      <div className="mb-8">
         <h2 className="text-3xl font-bold">Featured Drops</h2>
         <p className="text-white/60 mt-2">
           Curated merchandise for serious players.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {/* ================= HORIZONTAL SCROLL ================= */}
+      <div
+        className="
+          flex gap-6
+          overflow-x-auto
+          pb-4
+          -mx-6 px-6
+          snap-x snap-mandatory
+          scrollbar-hide
+        "
+      >
         {featured.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <div
+            key={product.id}
+            className="
+              min-w-[75%] sm:min-w-[45%] md:min-w-[32%] lg:min-w-[24%]
+              snap-start
+            "
+          >
+            <ProductCard product={product} />
+          </div>
         ))}
       </div>
     </section>
