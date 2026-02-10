@@ -1,6 +1,7 @@
-//src/pages/Shop.jsx
+// src/pages/Shop.jsx
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
+import { Link } from "react-router-dom";
 
 import ProductCard from "../components/product/ProductCard";
 import CategoryFilter from "../components/shop/CategoryFilter";
@@ -107,11 +108,69 @@ function Shop() {
       {visibleProducts.length === 0 ? (
         <p className="text-white/50 mt-10">No products found.</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <>
+          {/* ================= MOBILE ROW LAYOUT ================= */}
+          <div className="mt-10 space-y-4 md:hidden">
+            {visibleProducts.map((product) => {
+              const primaryMedia =
+                product.product_medias?.find((m) => m.isPrimary) ||
+                product.product_medias?.[0];
+
+              const imageUrl =
+                primaryMedia?.ProductMedia?.formats?.small?.url ||
+                primaryMedia?.ProductMedia?.url;
+
+              return (
+                <Link
+                  key={product.id}
+                  to={`/product/${product.slug}`}
+                  className="flex gap-4 bg-[#111] rounded-2xl
+                             border border-white/10 p-3
+                             hover:border-green-400/60 transition"
+                >
+                  {/* IMAGE */}
+                  <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-black">
+                    <img
+                      src={imageUrl}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* INFO */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-sm font-semibold line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-white/60 mt-1">
+                        ⭐ {product.product_reviews?.length || 0} reviews
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-green-400 font-bold">
+                        ₹{product.price}
+                      </p>
+                      <p className="text-xs text-white/50">
+                        {product.launchStatus === "coming_soon"
+                          ? "Coming Soon"
+                          : "In Stock"}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* ================= DESKTOP GRID ================= */}
+          <div className="hidden md:grid mt-10 gap-8 md:grid-cols-3 lg:grid-cols-4">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
