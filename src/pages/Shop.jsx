@@ -72,11 +72,6 @@ function Shop() {
         ]}
       />
 
-      <h1 className="text-4xl font-bold mb-4">Shop</h1>
-      <p className="text-white/60 mb-8">
-        Explore premium poker merchandise crafted for players who go ALL IN.
-      </p>
-
       {/* CONTROLS */}
       <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between mb-10">
         <input
