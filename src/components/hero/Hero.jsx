@@ -48,7 +48,7 @@ function Hero() {
             ALL IN • PREMIUM POKER WEAR
           </p>
 
-          <h1 className="text-4xl font-extrabold leading-tight">
+          <h1 className="text-3xl font-extrabold leading-tight">
             Built for the table. <br />
             <span className="text-green-400">Styled for life.</span>
           </h1>
@@ -58,7 +58,7 @@ function Hero() {
             beyond.
           </p>
 
-          <div className="mt-10 w-[320px] animate-hero-crazy">
+          <div className="mt-10 w-[250px] animate-hero-crazy">
             <img src="/hero-product.png" alt="ALLiN Premium Hoodie" />
           </div>
 
