@@ -1,14 +1,14 @@
 // src/components/hero/Hero.jsx
 function Hero() {
   return (
-    <section className="relative min-h-[90vh] -mt-16 flex items-center md:items-center overflow-hidden">
+    <section className="relative min-h-[90vh] pt-16 md:pt-0 md:-mt-16 flex items-center overflow-hidden">
       {/* ================= BACKGROUND ================= */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a0a] to-black" />
 
       {/* Ambient glow */}
       <div className="absolute top-1/3 right-[-160px] w-[520px] h-[520px] bg-green-400/20 blur-[160px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-4 pb-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-2 pb-4">
         {/* ================= DESKTOP GRID ================= */}
         <div className="hidden md:grid md:grid-cols-2 gap-14 items-center">
           {/* LEFT */}
@@ -55,7 +55,7 @@ function Hero() {
         {/* ================= MOBILE STACK ================= */}
         <div className="md:hidden flex flex-col items-center text-center">
           {/* TEXT */}
-          <p className="mt-4 text-xs uppercase tracking-[0.3em] text-white/50 mb-3">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-3">
             ALL IN • PREMIUM POKER WEAR
           </p>
 
