@@ -16,7 +16,10 @@ function Navbar() {
   return (
     <>
       {/* ================= TOP NAVBAR ================= */}
-      <header className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
+      <header
+        className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10"
+        style={{ "--nav-h": "64px" }} // ✅ SINGLE SOURCE OF TRUTH
+      >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-2">
@@ -68,7 +71,7 @@ function Navbar() {
               )}
             </button>
 
-            {/* MOBILE MENU TOGGLE */}
+            {/* MOBILE MENU */}
             <button
               onClick={() => setMenuOpen((p) => !p)}
               className="md:hidden p-2 rounded-full border border-white/20 hover:border-white/40 transition"
@@ -84,7 +87,6 @@ function Navbar() {
       {menuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black">
           <div className="absolute top-16 left-0 right-0 bg-[#0b0b0b] pb-6 animate-slideDown border-t border-white/10">
-            {/* NAVIGATION */}
             <p className="px-6 pt-5 pb-2 text-xs font-semibold tracking-widest text-white/40">
               NAVIGATION
             </p>
@@ -97,9 +99,7 @@ function Navbar() {
                 active={location.pathname === "/"}
                 onClick={closeMenu}
               />
-
               <Divider />
-
               <MobileLink
                 to="/shop"
                 icon={<ShoppingBag size={18} />}
@@ -107,9 +107,7 @@ function Navbar() {
                 active={location.pathname.startsWith("/shop")}
                 onClick={closeMenu}
               />
-
               <Divider />
-
               <MobileLink
                 to="/contact"
                 icon={<Mail size={18} />}
@@ -119,27 +117,11 @@ function Navbar() {
               />
             </div>
 
-            {/* EXPLORE */}
             <p className="px-6 pt-6 pb-2 text-xs font-semibold tracking-widest text-white/40">
               EXPLORE
             </p>
 
             <div className="mx-4 bg-[#111] rounded-2xl overflow-hidden border border-white/10">
-              <button
-                onClick={() => {
-                  closeMenu();
-                  document
-                    .getElementById("featured-drops")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="w-full flex items-center justify-between px-5 py-4 text-white/80 active:bg-white/5"
-              >
-                <span>Featured Drops</span>
-                <ChevronRight size={18} className="text-white/40" />
-              </button>
-
-              <Divider />
-
               <Link
                 to="/shop"
                 onClick={closeMenu}
@@ -153,17 +135,10 @@ function Navbar() {
         </div>
       )}
 
-      {/* ================= ANIMATION ================= */}
       <style>{`
         @keyframes slideDown {
-          from {
-            transform: translateY(-20px);
-            opacity: 0;
-          }
-          to {
-            transform: translateY(0);
-            opacity: 1;
-          }
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
         }
         .animate-slideDown {
           animation: slideDown 0.25s ease-out;

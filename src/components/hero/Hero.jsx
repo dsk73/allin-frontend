@@ -1,6 +1,14 @@
+import { Link } from "react-router-dom";
+
 function Hero() {
   return (
-    <section className="relative min-h-[calc(100svh-4rem)] flex items-center overflow-hidden">
+    <section
+      className="relative flex items-center overflow-hidden"
+      style={{
+        minHeight: "calc(100svh - var(--nav-h))",
+        paddingTop: "var(--nav-h)",
+      }}
+    >
       {/* BACKGROUND */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a0a] to-black" />
 
@@ -8,7 +16,7 @@ function Hero() {
       <div className="absolute top-1/3 right-[-160px] w-[520px] h-[520px] bg-green-400/20 blur-[160px]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-8 md:py-12">
-        {/* DESKTOP */}
+        {/* ================= DESKTOP ================= */}
         <div className="hidden md:grid md:grid-cols-2 gap-14 items-center">
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-white/50 mb-3">
@@ -26,12 +34,19 @@ function Hero() {
             </p>
 
             <div className="mt-8 flex gap-4">
-              <button className="px-10 py-4 rounded-full bg-green-400 text-black font-bold text-lg">
+              <Link
+                to="/shop"
+                className="px-10 py-4 rounded-full bg-green-400 text-black font-bold text-lg hover:bg-green-300 transition"
+              >
                 Shop New Drops
-              </button>
-              <button className="px-10 py-4 rounded-full border border-white/20 text-white font-semibold text-lg">
+              </Link>
+
+              <Link
+                to="/shop"
+                className="px-10 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:border-white/40 transition"
+              >
                 Lookbook
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -42,13 +57,13 @@ function Hero() {
           </div>
         </div>
 
-        {/* MOBILE */}
+        {/* ================= MOBILE ================= */}
         <div className="md:hidden flex flex-col items-center text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-3">
             ALL IN • PREMIUM POKER WEAR
           </p>
 
-          <h1 className="text-3xl font-extrabold leading-tight">
+          <h1 className="text-4xl font-extrabold leading-tight">
             Built for the table. <br />
             <span className="text-green-400">Styled for life.</span>
           </h1>
@@ -58,17 +73,24 @@ function Hero() {
             beyond.
           </p>
 
-          <div className="mt-10 w-[250px] animate-hero-crazy">
+          <div className="mt-10 w-[320px] animate-hero-crazy">
             <img src="/hero-product.png" alt="ALLiN Premium Hoodie" />
           </div>
 
           <div className="mt-6 flex gap-3">
-            <button className="px-6 py-3 rounded-full bg-green-400 text-black font-bold text-sm">
+            <Link
+              to="/shop"
+              className="px-6 py-3 rounded-full bg-green-400 text-black font-bold text-sm"
+            >
               Shop
-            </button>
-            <button className="px-6 py-3 rounded-full border border-white/20 text-white font-semibold text-sm">
+            </Link>
+
+            <Link
+              to="/shop"
+              className="px-6 py-3 rounded-full border border-white/20 text-white font-semibold text-sm"
+            >
               Lookbook
-            </button>
+            </Link>
           </div>
         </div>
       </div>
