@@ -4,7 +4,7 @@ import { api } from "../services/api";
 import { Link } from "react-router-dom";
 
 import ProductCard from "../components/product/ProductCard";
-import CategoryFilter from "../components/shop/CategoryFilter";
+import CategoryTabs from "../components/category/CategoryTabs";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 
 function Shop() {
@@ -99,7 +99,7 @@ function Shop() {
         </select>
       </div>
 
-      <CategoryFilter
+      <CategoryTabs
         categories={categories}
         activeCategory={activeCategory}
         onChange={setActiveCategory}
