@@ -81,7 +81,7 @@ function Home() {
                    hover:border-green-400/60 transition"
                 >
                   {/* IMAGE */}
-                  <div className="w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-black">
+                  <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-black">
                     <img
                       src={imageUrl}
                       alt={product.name}
