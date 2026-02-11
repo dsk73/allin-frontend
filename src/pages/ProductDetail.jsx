@@ -98,7 +98,7 @@ function ProductDetail() {
         />
 
         {/* ================= TOP ================= */}
-        <div className="grid md:grid-cols-2 gap-16 mt-6 items-start">
+        <div className="grid md:grid-cols-2 gap-4 mt-6 items-start">
           <div className="relative">
             <ProductBadge type={badgeType} />
             <ProductGallery medias={product.product_medias || []} />

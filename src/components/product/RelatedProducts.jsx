@@ -96,7 +96,7 @@ function RelatedProducts({ categoryId, currentProductId }) {
       </div>
 
       {/* ================= DESKTOP GRID ================= */}
-      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-2">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

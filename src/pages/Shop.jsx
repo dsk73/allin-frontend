@@ -163,7 +163,7 @@ function Shop() {
           </div>
 
           {/* ================= DESKTOP GRID ================= */}
-          <div className="hidden md:grid mt-10 gap-8 md:grid-cols-3 lg:grid-cols-4">
+          <div className="hidden md:grid mt-10 gap-2 md:grid-cols-3 lg:grid-cols-4">
             {visibleProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
