@@ -19,7 +19,7 @@ function FeaturedProducts({ products }) {
       {/* ================= HORIZONTAL SCROLL ================= */}
       <div
         className="
-    flex gap-6
+    flex gap-2
     overflow-x-auto
     pb-4
     -mx-6 px-6

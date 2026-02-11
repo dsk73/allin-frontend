@@ -70,8 +70,26 @@ function Contact() {
             <div className="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6">
               <h3 className="text-lg font-semibold mb-2">Socials</h3>
               <ul className="text-white/60 space-y-1">
-                <li>Instagram</li>
-                <li>Twitter (X)</li>
+                <li>
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition"
+                  >
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition"
+                  >
+                    Twitter (X)
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
