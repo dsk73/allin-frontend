@@ -11,6 +11,11 @@ import Category from "./pages/Category";
 import ProductDetail from "./pages/ProductDetail";
 import CartDrawer from "./components/cart/CartDrawer";
 import Contact from "./pages/Contact";
+import Legal from "./pages/legal/Legal";
+import Terms from "./pages/legal/Terms";
+import Privacy from "./pages/legal/Privacy";
+import Trademark from "./pages/legal/Trademark";
+import Promotions from "./pages/legal/Promotions";
 
 function App() {
   return (
@@ -25,6 +30,11 @@ function App() {
           <Route path="/category/:slug" element={<Category />} />
           <Route path="/product/:slug" element={<ProductDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/legal/terms" element={<Terms />} />
+          <Route path="/legal/privacy" element={<Privacy />} />
+          <Route path="/legal/trademark" element={<Trademark />} />
+          <Route path="/legal/promotions" element={<Promotions />} />
         </Routes>
 
         <CartDrawer />

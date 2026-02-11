@@ -4,10 +4,10 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-black">
       <div className="max-w-7xl mx-auto px-6 py-16 text-sm text-white/70">
-        {/* ================= GRID ================= */}
-        <div className="grid gap-12 md:grid-cols-4">
-          {/* ================= BRAND ================= */}
-          <div className="md:col-span-1">
+        {/* ================= DESKTOP GRID ================= */}
+        <div className="hidden md:grid grid-cols-5 gap-12">
+          {/* BRAND */}
+          <div>
             <h4 className="text-xl font-bold text-white mb-3">
               ALL<span className="text-green-400">iN</span>
             </h4>
@@ -16,9 +16,116 @@ function Footer() {
             </p>
           </div>
 
-          {/* ================= NAV GROUP (MOBILE 3 COLS) ================= */}
-          <div className="grid grid-cols-3 gap-6 md:col-span-3">
-            {/* Shop */}
+          {/* SHOP */}
+          <div>
+            <h5 className="text-white font-semibold mb-3">Shop</h5>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/shop" className="hover:text-white transition">
+                  All Products
+                </Link>
+              </li>
+              <li className="opacity-60">Hoodies</li>
+              <li className="opacity-60">T-Shirts</li>
+            </ul>
+          </div>
+
+          {/* COMPANY */}
+          <div>
+            <h5 className="text-white font-semibold mb-3">Company</h5>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="hover:text-white transition">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* FOLLOW */}
+          <div>
+            <h5 className="text-white font-semibold mb-3">Follow</h5>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                >
+                  Twitter (X)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* LEGAL */}
+          <div>
+            <h5 className="text-white font-semibold mb-3">Legal</h5>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/legal/terms" className="hover:text-white transition">
+                  Terms of Use
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/legal/privacy"
+                  className="hover:text-white transition"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/legal/trademark"
+                  className="hover:text-white transition"
+                >
+                  Trademark
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/legal/promotions"
+                  className="hover:text-white transition"
+                >
+                  Promotion Terms
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* ================= MOBILE LAYOUT ================= */}
+        <div className="md:hidden">
+          {/* BRAND */}
+          <div className="mb-10">
+            <h4 className="text-xl font-bold text-white mb-3">
+              ALL<span className="text-green-400">iN</span>
+            </h4>
+            <p>
+              Poker culture. Apparel. Mindset. Built for players who never fold.
+            </p>
+          </div>
+
+          {/* LINKS GRID (2x2) */}
+          <div className="grid grid-cols-2 gap-8">
+            {/* SHOP */}
             <div>
               <h5 className="text-white font-semibold mb-3">Shop</h5>
               <ul className="space-y-2">
@@ -27,12 +134,12 @@ function Footer() {
                     All Products
                   </Link>
                 </li>
-                <li className="opacity-60 cursor-not-allowed">Hoodies</li>
-                <li className="opacity-60 cursor-not-allowed">T-Shirts</li>
+                <li className="opacity-60">Hoodies</li>
+                <li className="opacity-60">T-Shirts</li>
               </ul>
             </div>
 
-            {/* Company */}
+            {/* COMPANY */}
             <div>
               <h5 className="text-white font-semibold mb-3">Company</h5>
               <ul className="space-y-2">
@@ -46,11 +153,10 @@ function Footer() {
                     Contact
                   </Link>
                 </li>
-                <li className="opacity-60 cursor-not-allowed">Privacy</li>
               </ul>
             </div>
 
-            {/* Follow */}
+            {/* FOLLOW */}
             <div>
               <h5 className="text-white font-semibold mb-3">Follow</h5>
               <ul className="space-y-2">
@@ -73,6 +179,45 @@ function Footer() {
                   >
                     Twitter (X)
                   </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* LEGAL */}
+            <div>
+              <h5 className="text-white font-semibold mb-3">Legal</h5>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/legal/terms"
+                    className="hover:text-white transition"
+                  >
+                    Terms
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/legal/privacy"
+                    className="hover:text-white transition"
+                  >
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/legal/trademark"
+                    className="hover:text-white transition"
+                  >
+                    Trademark
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/legal/promotions"
+                    className="hover:text-white transition"
+                  >
+                    Promotions
+                  </Link>
                 </li>
               </ul>
             </div>
