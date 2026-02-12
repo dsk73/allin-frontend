@@ -39,13 +39,13 @@ function Reviews({ reviews = [] }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2">
       {approvedReviews.map((review) => (
         <div
           key={review.id}
           className="bg-[#111] p-6 rounded-2xl border border-white/10"
         >
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-2">
             <h4 className="font-semibold">{review.name}</h4>
             <div className="flex text-sm">{renderStars(review.rating)}</div>
           </div>

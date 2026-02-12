@@ -123,7 +123,7 @@ function Home() {
           </div>
 
           {/* ================= DESKTOP GRID ================= */}
-          <div className="hidden md:grid mt-8 grid-cols-3 lg:grid-cols-5 gap-2">
+          <div className="hidden md:grid mt-8 grid-cols-4 lg:grid-cols-5 gap-2">
             {homeProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

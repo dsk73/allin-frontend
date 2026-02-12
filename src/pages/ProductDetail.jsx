@@ -98,7 +98,7 @@ function ProductDetail() {
         />
 
         {/* ================= TOP ================= */}
-        <div className="grid md:grid-cols-2 gap-4 mt-6 items-start">
+        <div className="grid md:grid-cols-2 gap-2 mt-6 items-start">
           <div className="relative">
             <ProductBadge type={badgeType} />
             <ProductGallery medias={product.product_medias || []} />
@@ -166,7 +166,7 @@ function ProductDetail() {
 
         {/* ================= REVIEWS ================= */}
         <div id="reviews" className="mt-24 md:mt-28">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-2xl font-bold">
               Reviews ({approvedReviews.length})
             </h3>
@@ -182,7 +182,7 @@ function ProductDetail() {
           </div>
 
           {showReviewForm && (
-            <div className="mb-16">
+            <div className="mb-4">
               <ReviewForm
                 productId={product.documentId}
                 onSubmitted={() => setShowReviewForm(false)}

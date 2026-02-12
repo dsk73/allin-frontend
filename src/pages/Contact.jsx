@@ -13,7 +13,7 @@ function Contact() {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="grid md:grid-cols-2 gap-12">
+      <div className="grid md:grid-cols-2 gap-4">
         {/* ================= LEFT – FORM ================= */}
         <form className="bg-[#0b0b0b] border border-white/10 rounded-2xl p-8 space-y-6">
           <div>
@@ -56,9 +56,9 @@ function Contact() {
         </form>
 
         {/* ================= RIGHT – INFO + MAP ================= */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           {/* ===== ROW 1: INFO ===== */}
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-2">
             <div className="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6">
               <h3 className="text-lg font-semibold mb-2">Email</h3>
               <p className="text-white/60">support@allin.store</p>
