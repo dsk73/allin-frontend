@@ -1,4 +1,5 @@
-import { api } from "./api";
+//src/services/productBySlug.js
+import api from "./api";
 
 export const fetchProductBySlug = async (slug) => {
   const res = await api.get(

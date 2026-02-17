@@ -1,4 +1,5 @@
-import { api } from "./api";
+//src/services/testimonials.js
+import api from "./api";
 
 export const fetchTestimonials = async () => {
   const response = await api.get("/testimonials?populate=*");

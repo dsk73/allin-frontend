@@ -1,6 +1,6 @@
 // src/components/product/ReviewForm.jsx
 import { useState } from "react";
-import { api } from "../../services/api";
+import api from "../../services/api";
 
 function ReviewForm({ productId, onSubmitted }) {
   const [name, setName] = useState("");

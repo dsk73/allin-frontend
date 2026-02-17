@@ -1,4 +1,5 @@
-import { api } from "./api";
+//src/services/categories.js
+import api from "./api";
 
 export const fetchCategories = async () => {
   const res = await api.get("/categories");

@@ -1,32 +1,49 @@
+//src/components/common/Navbar.jsx
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Home, ShoppingBag, Mail, ChevronRight, X } from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Home,
+  ShoppingBag,
+  Mail,
+  ChevronRight,
+  X,
+  LogOut,
+  User,
+} from "lucide-react";
 import logo from "/logo.png";
+
 import useCartStore from "../../store/cartStore";
+import useAuth from "../../context/AuthContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const openCart = useCartStore((s) => s.openCart);
   const totalItems = useCartStore((s) => s.totalItems());
 
+  const { user, logout } = useAuth();
+
   const closeMenu = () => setMenuOpen(false);
+
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+    navigate("/", { replace: true });
+  };
 
   return (
     <>
       {/* ================= TOP NAVBAR ================= */}
-      <header
-        className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10"
-        style={{ "--nav-h": "64px" }} // ✅ SINGLE SOURCE OF TRUTH
-      >
+      <header className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="ALLiN" className="h-10 w-auto" />
           </Link>
 
-          {/* DESKTOP NAV */}
+          {/* ================= DESKTOP NAV ================= */}
           <nav className="hidden md:flex items-center gap-8 text-white/70">
             <NavLink
               to="/"
@@ -54,9 +71,45 @@ function Navbar() {
             >
               Contact
             </NavLink>
+
+            {/* AUTH STATE */}
+            {user ? (
+              <div className="relative group">
+                <button className="flex items-center gap-2 hover:text-white">
+                  <User size={16} />
+                  <span className="font-semibold">{user.username}</span>
+                </button>
+
+                {/* DROPDOWN */}
+                <div
+                  className="absolute right-0 mt-3 w-40 rounded-xl bg-[#111]
+                                border border-white/10 overflow-hidden
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                                transition"
+                >
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-3 text-sm hover:bg-white/5"
+                  >
+                    Profile
+                  </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-white/5"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <NavLink to="/login" className="hover:text-white">
+                Login
+              </NavLink>
+            )}
           </nav>
 
-          {/* ACTIONS */}
+          {/* ================= ACTIONS ================= */}
           <div className="flex items-center gap-3">
             {/* CART */}
             <button
@@ -71,7 +124,7 @@ function Navbar() {
               )}
             </button>
 
-            {/* MOBILE MENU */}
+            {/* MOBILE MENU TOGGLE */}
             <button
               onClick={() => setMenuOpen((p) => !p)}
               className="md:hidden p-2 rounded-full border border-white/20 hover:border-white/40 transition"
@@ -87,6 +140,7 @@ function Navbar() {
       {menuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black">
           <div className="absolute top-16 left-0 right-0 bg-[#0b0b0b] pb-6 animate-slideDown border-t border-white/10">
+            {/* NAVIGATION */}
             <p className="px-6 pt-5 pb-2 text-xs font-semibold tracking-widest text-white/40">
               NAVIGATION
             </p>
@@ -99,7 +153,9 @@ function Navbar() {
                 active={location.pathname === "/"}
                 onClick={closeMenu}
               />
+
               <Divider />
+
               <MobileLink
                 to="/shop"
                 icon={<ShoppingBag size={18} />}
@@ -107,7 +163,9 @@ function Navbar() {
                 active={location.pathname.startsWith("/shop")}
                 onClick={closeMenu}
               />
+
               <Divider />
+
               <MobileLink
                 to="/contact"
                 icon={<Mail size={18} />}
@@ -115,26 +173,53 @@ function Navbar() {
                 active={location.pathname === "/contact"}
                 onClick={closeMenu}
               />
+
+              {user && (
+                <>
+                  <Divider />
+                  <MobileLink
+                    to="/profile"
+                    icon={<User size={18} />}
+                    label="Profile"
+                    active={location.pathname === "/profile"}
+                    onClick={closeMenu}
+                  />
+                </>
+              )}
             </div>
 
+            {/* ACCOUNT */}
             <p className="px-6 pt-6 pb-2 text-xs font-semibold tracking-widest text-white/40">
-              EXPLORE
+              ACCOUNT
             </p>
 
             <div className="mx-4 bg-[#111] rounded-2xl overflow-hidden border border-white/10">
-              <Link
-                to="/shop"
-                onClick={closeMenu}
-                className="flex items-center justify-between px-5 py-4 text-white/80 active:bg-white/5"
-              >
-                <span>Shop All Products</span>
-                <ChevronRight size={18} className="text-white/40" />
-              </Link>
+              {!user ? (
+                <MobileLink
+                  to="/login"
+                  icon={<User size={18} />}
+                  label="Login"
+                  active={location.pathname === "/login"}
+                  onClick={closeMenu}
+                />
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-between px-5 py-4 text-red-400 active:bg-white/5"
+                >
+                  <span className="flex items-center gap-3">
+                    <LogOut size={16} />
+                    Logout
+                  </span>
+                  <ChevronRight size={18} className="text-white/40" />
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
 
+      {/* ================= ANIMATION ================= */}
       <style>{`
         @keyframes slideDown {
           from { transform: translateY(-20px); opacity: 0; }
