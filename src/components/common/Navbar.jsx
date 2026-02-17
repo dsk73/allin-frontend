@@ -1,6 +1,6 @@
-//src/components/common/Navbar.jsx
-import { useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+// src/components/common/Navbar.jsx
+import { useState, useEffect, useRef } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Home,
   ShoppingBag,
@@ -13,12 +13,14 @@ import {
 import logo from "/logo.png";
 
 import useCartStore from "../../store/cartStore";
-import useAuth from "../../context/AuthContext";
+import useAuth from "../../context/useAuth";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const navigate = useNavigate();
+  const profileRef = useRef(null);
 
   const openCart = useCartStore((s) => s.openCart);
   const totalItems = useCartStore((s) => s.totalItems());
@@ -29,88 +31,47 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
+    setProfileOpen(false);
     closeMenu();
     navigate("/", { replace: true });
   };
+
+  /* Close profile dropdown on outside click (desktop) */
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
       {/* ================= TOP NAVBAR ================= */}
       <header className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="ALLiN" className="h-10 w-auto" />
           </Link>
 
-          {/* ================= DESKTOP NAV ================= */}
-          <nav className="hidden md:flex items-center gap-8 text-white/70">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? "text-white font-semibold" : "hover:text-white"
-              }
-            >
+          {/* CENTER NAV (DESKTOP) */}
+          <nav className="hidden md:flex flex-1 justify-center items-center gap-10 text-white/70">
+            <NavLink to="/" className="hover:text-white">
               Home
             </NavLink>
-
-            <NavLink
-              to="/shop"
-              className={({ isActive }) =>
-                isActive ? "text-white font-semibold" : "hover:text-white"
-              }
-            >
+            <NavLink to="/shop" className="hover:text-white">
               Shop
             </NavLink>
-
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive ? "text-white font-semibold" : "hover:text-white"
-              }
-            >
+            <NavLink to="/contact" className="hover:text-white">
               Contact
             </NavLink>
-
-            {/* AUTH STATE */}
-            {user ? (
-              <div className="relative group">
-                <button className="flex items-center gap-2 hover:text-white">
-                  <User size={16} />
-                  <span className="font-semibold">{user.username}</span>
-                </button>
-
-                {/* DROPDOWN */}
-                <div
-                  className="absolute right-0 mt-3 w-40 rounded-xl bg-[#111]
-                                border border-white/10 overflow-hidden
-                                opacity-0 invisible group-hover:opacity-100 group-hover:visible
-                                transition"
-                >
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-3 text-sm hover:bg-white/5"
-                  >
-                    Profile
-                  </Link>
-
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-white/5"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <NavLink to="/login" className="hover:text-white">
-                Login
-              </NavLink>
-            )}
           </nav>
 
-          {/* ================= ACTIONS ================= */}
-          <div className="flex items-center gap-3">
+          {/* RIGHT: CART + AUTH (DESKTOP) */}
+          <div className="hidden md:flex items-center gap-4">
             {/* CART */}
             <button
               onClick={openCart}
@@ -124,11 +85,63 @@ function Navbar() {
               )}
             </button>
 
-            {/* MOBILE MENU TOGGLE */}
+            {/* AUTH DROPDOWN (DESKTOP – FIXED) */}
+            {user ? (
+              <div
+                ref={profileRef}
+                className="relative"
+                onMouseEnter={() => setProfileOpen(true)}
+                onMouseLeave={() => setProfileOpen(false)}
+              >
+                <button className="flex items-center gap-2 hover:text-white">
+                  <User size={16} />
+                  <span className="font-semibold">{user.username}</span>
+                </button>
+
+                {profileOpen && (
+                  <div className="absolute right-0 top-full pt-2 z-50">
+                    <div className="w-44 rounded-xl bg-[#111] border border-white/10 shadow-xl overflow-hidden">
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-3 text-sm hover:bg-white/5"
+                      >
+                        Profile
+                      </Link>
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-white/5"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink to="/login" className="hover:text-white">
+                Login
+              </NavLink>
+            )}
+          </div>
+
+          {/* MOBILE: CART + TOGGLE */}
+          <div className="md:hidden ml-auto flex items-center gap-2">
+            <button
+              onClick={openCart}
+              className="relative px-3 py-2 rounded-full border border-white/20"
+            >
+              🛒
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-green-400 text-black text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
             <button
               onClick={() => setMenuOpen((p) => !p)}
-              className="md:hidden p-2 rounded-full border border-white/20 hover:border-white/40 transition"
-              aria-label="Toggle Menu"
+              className="p-2 rounded-full border border-white/20"
             >
               {menuOpen ? <X size={20} /> : "☰"}
             </button>
@@ -140,7 +153,6 @@ function Navbar() {
       {menuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black">
           <div className="absolute top-16 left-0 right-0 bg-[#0b0b0b] pb-6 animate-slideDown border-t border-white/10">
-            {/* NAVIGATION */}
             <p className="px-6 pt-5 pb-2 text-xs font-semibold tracking-widest text-white/40">
               NAVIGATION
             </p>
@@ -150,30 +162,22 @@ function Navbar() {
                 to="/"
                 icon={<Home size={18} />}
                 label="Home"
-                active={location.pathname === "/"}
                 onClick={closeMenu}
               />
-
               <Divider />
-
               <MobileLink
                 to="/shop"
                 icon={<ShoppingBag size={18} />}
                 label="Shop"
-                active={location.pathname.startsWith("/shop")}
                 onClick={closeMenu}
               />
-
               <Divider />
-
               <MobileLink
                 to="/contact"
                 icon={<Mail size={18} />}
                 label="Contact"
-                active={location.pathname === "/contact"}
                 onClick={closeMenu}
               />
-
               {user && (
                 <>
                   <Divider />
@@ -181,14 +185,12 @@ function Navbar() {
                     to="/profile"
                     icon={<User size={18} />}
                     label="Profile"
-                    active={location.pathname === "/profile"}
                     onClick={closeMenu}
                   />
                 </>
               )}
             </div>
 
-            {/* ACCOUNT */}
             <p className="px-6 pt-6 pb-2 text-xs font-semibold tracking-widest text-white/40">
               ACCOUNT
             </p>
@@ -199,7 +201,6 @@ function Navbar() {
                   to="/login"
                   icon={<User size={18} />}
                   label="Login"
-                  active={location.pathname === "/login"}
                   onClick={closeMenu}
                 />
               ) : (
@@ -235,15 +236,12 @@ function Navbar() {
 
 /* ================= HELPERS ================= */
 
-function MobileLink({ to, icon, label, active, onClick }) {
+function MobileLink({ to, icon, label, onClick }) {
   return (
     <NavLink
       to={to}
       onClick={onClick}
-      className={`flex items-center justify-between px-5 py-4 transition
-        ${active ? "text-green-400 font-semibold" : "text-white/80"}
-        active:bg-white/5
-      `}
+      className="flex items-center justify-between px-5 py-4 text-white/80 hover:bg-white/5"
     >
       <div className="flex items-center gap-3">
         <span className="text-white/50">{icon}</span>

@@ -22,7 +22,7 @@ import Trademark from "./pages/legal/Trademark";
 import Promotions from "./pages/legal/Promotions";
 
 /* ================= AUTH ================= */
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
