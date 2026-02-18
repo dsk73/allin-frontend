@@ -98,15 +98,17 @@ function ProductDetail() {
         />
 
         {/* ================= TOP ================= */}
-        <div className="grid md:grid-cols-2 gap-2 mt-6 items-start">
-          <div className="relative">
+        <div className="flex flex-col md:flex-row gap-4 mt-6 items-start">
+          {/* ================= IMAGE (40%) ================= */}
+          <div className="w-full md:w-[40%] relative">
             <ProductBadge type={badgeType} />
             <ProductGallery medias={product.product_medias || []} />
           </div>
 
-          {/* ================= INFO CARD ================= */}
+          {/* ================= INFO + CTA (60%) ================= */}
           <div
             className="
+              w-full md:w-[60%]
               bg-white/[0.02] md:bg-white/[0.03]
               md:border md:border-white/10
               rounded-2xl
@@ -143,13 +145,13 @@ function ProductDetail() {
               id="main-add-to-cart"
               onClick={handleAddToCart}
               className="
-                mt-6 md:mt-10
-                w-full
-                px-10 md:px-12
-                py-4 md:py-5
+                mt-6 md:mt-8
+                inline-flex
+                px-8 md:px-10
+                py-3 md:py-3.5
                 bg-green-400 text-black
                 rounded-full
-                font-bold text-base md:text-lg
+                font-bold text-sm md:text-base
                 shadow-lg shadow-green-400/30
                 transition-all duration-300
                 hover:bg-green-300 hover:-translate-y-0.5
@@ -173,9 +175,11 @@ function ProductDetail() {
 
             <button
               onClick={() => setShowReviewForm((p) => !p)}
-              className="px-4 py-2 rounded-full text-sm font-semibold
-                         border border-green-400 text-green-400
-                         hover:bg-green-400 hover:text-black transition"
+              className="
+                px-4 py-2 rounded-full text-sm font-semibold
+                border border-green-400 text-green-400
+                hover:bg-green-400 hover:text-black transition
+              "
             >
               {showReviewForm ? "Close review form" : "Post a review"}
             </button>
