@@ -39,18 +39,14 @@ function Signup() {
   };
 
   return (
-    <AuthLayout
-      title="Create your ALLiN account"
-      subtitle="Join the premium poker lifestyle"
-    >
+    <AuthLayout title="Create your ALLiN account">
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-2 text-sm text-red-400">
+          <div className="animate-shake rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-2 text-sm text-red-400">
             {error}
           </div>
         )}
 
-        {/* USERNAME */}
         <input
           type="text"
           name="username"
@@ -58,12 +54,9 @@ function Signup() {
           onChange={handleChange}
           placeholder="Username"
           required
-          autoComplete="username"
-          className="w-full bg-black border border-white/20 rounded-full px-5 py-3
-                     focus:outline-none focus:border-green-400 transition"
+          className="w-full rounded-full px-5 py-3 bg-black/60 border border-white/20 focus:border-green-400 focus:outline-none transition-all"
         />
 
-        {/* EMAIL */}
         <input
           type="email"
           name="email"
@@ -71,12 +64,9 @@ function Signup() {
           onChange={handleChange}
           placeholder="Email"
           required
-          autoComplete="email"
-          className="w-full bg-black border border-white/20 rounded-full px-5 py-3
-                     focus:outline-none focus:border-green-400 transition"
+          className="w-full rounded-full px-5 py-3 bg-black/60 border border-white/20 focus:border-green-400 focus:outline-none transition-all"
         />
 
-        {/* PASSWORD */}
         <input
           type="password"
           name="password"
@@ -84,25 +74,30 @@ function Signup() {
           onChange={handleChange}
           placeholder="Password"
           required
-          autoComplete="new-password"
-          className="w-full bg-black border border-white/20 rounded-full px-5 py-3
-                     focus:outline-none focus:border-green-400 transition"
+          className="w-full rounded-full px-5 py-3 bg-black/60 border border-white/20 focus:border-green-400 focus:outline-none transition-all"
         />
 
-        {/* SUBMIT */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-full bg-green-400 py-3 font-bold text-black
-                     hover:bg-green-300 transition disabled:opacity-60"
+          className="
+            w-full rounded-full py-3 font-bold text-black
+            bg-green-400
+            hover:bg-green-300
+            hover:-translate-y-0.5
+            transition-all
+            disabled:opacity-60
+          "
         >
           {loading ? "Creating account…" : "Sign Up"}
         </button>
 
-        {/* FOOTER */}
         <p className="text-center text-sm text-white/60">
           Already have an account?{" "}
-          <Link to="/login" className="text-green-400 hover:underline">
+          <Link
+            to="/login"
+            className="relative text-green-400 after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-green-400 after:transition-all hover:after:w-full"
+          >
             Login
           </Link>
         </p>

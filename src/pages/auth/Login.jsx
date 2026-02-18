@@ -31,18 +31,14 @@ function Login() {
   };
 
   return (
-    <AuthLayout
-      title="Welcome back"
-      subtitle="Login to continue your ALLiN journey"
-    >
+    <AuthLayout title="Welcome back">
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-2 text-sm text-red-400">
+          <div className="animate-shake rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-2 text-sm text-red-400">
             {error}
           </div>
         )}
 
-        {/* IDENTIFIER */}
         <input
           type="text"
           value={identifier}
@@ -50,11 +46,15 @@ function Login() {
           placeholder="Email or Username"
           required
           autoComplete="username"
-          className="w-full bg-black border border-white/20 rounded-full px-5 py-3
-                     focus:outline-none focus:border-green-400 transition"
+          className="
+            w-full rounded-full px-5 py-3
+            bg-black/60 border border-white/20
+            focus:outline-none focus:border-green-400
+            focus:shadow-[0_0_0_3px_rgba(0,255,128,0.15)]
+            transition-all
+          "
         />
 
-        {/* PASSWORD */}
         <input
           type="password"
           value={password}
@@ -62,28 +62,55 @@ function Login() {
           placeholder="Password"
           required
           autoComplete="current-password"
-          className="w-full bg-black border border-white/20 rounded-full px-5 py-3
-                     focus:outline-none focus:border-green-400 transition"
+          className="
+            w-full rounded-full px-5 py-3
+            bg-black/60 border border-white/20
+            focus:outline-none focus:border-green-400
+            focus:shadow-[0_0_0_3px_rgba(0,255,128,0.15)]
+            transition-all
+          "
         />
 
-        {/* SUBMIT */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-full bg-green-400 py-3 font-bold text-black
-                     hover:bg-green-300 transition disabled:opacity-60"
+          className="
+            relative w-full rounded-full py-3 font-bold text-black
+            bg-green-400
+            hover:bg-green-300
+            hover:-translate-y-0.5
+            active:translate-y-0
+            transition-all
+            disabled:opacity-60
+          "
         >
           {loading ? "Logging in…" : "Login"}
         </button>
 
-        {/* FOOTER */}
         <p className="text-center text-sm text-white/60">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-green-400 hover:underline">
+          <Link
+            to="/signup"
+            className="relative text-green-400 after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-green-400 after:transition-all hover:after:w-full"
+          >
             Create one
           </Link>
         </p>
       </form>
+
+      <style>
+        {`
+          @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+          }
+
+          .animate-shake {
+            animation: shake 0.3s ease-in-out;
+          }
+        `}
+      </style>
     </AuthLayout>
   );
 }
