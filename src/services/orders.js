@@ -2,45 +2,47 @@
 import api from "./api";
 
 /**
- * Fetch order items for the logged-in user
- * - Fetch orders via users/me (Strapi-safe)
- * - Flatten to order items
- * - Deduplicate strictly by OrderItem ID
- * - Sort by order createdAt DESC
+ * FINAL LOGIC (PRODUCTION SAFE):
+ * - Fetch all orders (already user-scoped by backend auth)
+ * - Flatten order_items
+ * - Deduplicate by: orderId + product.name
+ * - Sort by createdAt DESC
  */
 export async function getMyOrders() {
   const res = await api.get(
-    "/users/me?populate[orders][populate][order_items][populate][product][populate][product_medias][populate]=ProductMedia",
+    "/orders?populate[order_items][populate][product][populate][product_medias][populate]=ProductMedia&sort=createdAt:desc",
   );
 
-  const orders = res.data?.orders || [];
+  const orders = res.data?.data || [];
 
-  const seenItemIds = new Set();
+  const seen = new Set();
   const items = [];
 
   for (const order of orders) {
-    const orderCreatedAt = order.createdAt;
+    const orderItems = order.order_items || [];
 
-    for (const item of order.order_items || []) {
-      // 🚫 HARD dedupe (this is what was causing 4 cards instead of 2)
-      if (seenItemIds.has(item.id)) continue;
-      seenItemIds.add(item.id);
-
+    for (const item of orderItems) {
       if (!item.product) continue;
 
+      // 🔑 TRUE business-unique key
+      const key = `${order.orderId}_${item.product.name}`;
+
+      if (seen.has(key)) continue;
+      seen.add(key);
+
       items.push({
-        id: item.id, // unique OrderItem id
+        id: key, // stable React key
         orderId: order.orderId,
         status: order.orderstatus,
         price: item.price,
         quantity: item.quantity,
-        createdAt: orderCreatedAt, // 👈 IMPORTANT (order date, not item)
+        createdAt: order.createdAt,
         product: item.product,
       });
     }
   }
 
-  // Latest orders first
+  // Latest first
   items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return items;

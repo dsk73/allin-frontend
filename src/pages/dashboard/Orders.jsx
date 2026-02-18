@@ -1,4 +1,3 @@
-// src/pages/dashboard/Orders.jsx
 import { useEffect, useState } from "react";
 import { ShoppingBag } from "lucide-react";
 
@@ -35,6 +34,17 @@ function Orders() {
     };
   }, []);
 
+  // ✅ DEV-ONLY debug (safe to remove later)
+  console.table(
+    items.map((i) => ({
+      reactKey: i.id,
+      orderId: i.orderId,
+      productId: i.product.id,
+      productName: i.product.name,
+      createdAt: i.createdAt,
+    })),
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-12">
       <h1 className="text-3xl md:text-4xl font-bold mb-2">My Orders</h1>
@@ -48,13 +58,7 @@ function Orders() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="
-                h-28 md:h-32
-                rounded-2xl
-                bg-[#111]
-                border border-white/10
-                animate-pulse
-              "
+              className="h-28 md:h-32 rounded-2xl bg-[#111] border border-white/10 animate-pulse"
             />
           ))}
         </div>
