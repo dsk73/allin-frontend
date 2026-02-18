@@ -30,7 +30,7 @@ function FeaturedProducts({ products }) {
         {featured.map((product) => (
           <div
             key={product.id}
-            className="min-w-[60%] md:min-w-[25%] snap-start"
+            className="min-w-[60%] md:min-w-[20%] snap-start"
           >
             <ProductCard product={product} />
           </div>
