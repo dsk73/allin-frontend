@@ -1,4 +1,3 @@
-// src/components/common/Navbar.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
@@ -85,7 +84,7 @@ function Navbar() {
               )}
             </button>
 
-            {/* AUTH DROPDOWN (DESKTOP – FIXED) */}
+            {/* AUTH DROPDOWN */}
             {user ? (
               <div
                 ref={profileRef}
@@ -106,6 +105,13 @@ function Navbar() {
                         className="block px-4 py-3 text-sm hover:bg-white/5"
                       >
                         Profile
+                      </Link>
+
+                      <Link
+                        to="/profile/orders"
+                        className="block px-4 py-3 text-sm hover:bg-white/5"
+                      >
+                        Orders
                       </Link>
 
                       <button
@@ -187,6 +193,13 @@ function Navbar() {
                     label="Profile"
                     onClick={closeMenu}
                   />
+                  <Divider />
+                  <MobileLink
+                    to="/profile/orders"
+                    icon={<ShoppingBag size={18} />}
+                    label="Orders"
+                    onClick={closeMenu}
+                  />
                 </>
               )}
             </div>
@@ -220,7 +233,6 @@ function Navbar() {
         </div>
       )}
 
-      {/* ================= ANIMATION ================= */}
       <style>{`
         @keyframes slideDown {
           from { transform: translateY(-20px); opacity: 0; }
@@ -233,8 +245,6 @@ function Navbar() {
     </>
   );
 }
-
-/* ================= HELPERS ================= */
 
 function MobileLink({ to, icon, label, onClick }) {
   return (

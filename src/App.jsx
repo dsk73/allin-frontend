@@ -1,4 +1,3 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /* ================= GLOBAL UI ================= */
@@ -30,47 +29,45 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 /* ================= DASHBOARD ================= */
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profile from "./pages/dashboard/Profile";
+import Orders from "./pages/dashboard/Orders";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        {/* App shell */}
         <div className="bg-black text-white min-h-screen flex flex-col">
-          {/* Always visible */}
           <Navbar />
           <ScrollToTop />
 
-          {/* Page content */}
           <main className="flex-1">
             <Routes>
-              {/* ========== PUBLIC AUTH ========== */}
+              {/* AUTH */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
 
-              {/* ========== PUBLIC PAGES ========== */}
+              {/* PUBLIC */}
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/category/:slug" element={<Category />} />
               <Route path="/product/:slug" element={<ProductDetail />} />
               <Route path="/contact" element={<Contact />} />
 
-              {/* ========== LEGAL ========== */}
+              {/* LEGAL */}
               <Route path="/legal" element={<Legal />} />
               <Route path="/legal/terms" element={<Terms />} />
               <Route path="/legal/privacy" element={<Privacy />} />
               <Route path="/legal/trademark" element={<Trademark />} />
               <Route path="/legal/promotions" element={<Promotions />} />
 
-              {/* ========== PROTECTED ========== */}
+              {/* PROTECTED */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/orders" element={<Orders />} />
               </Route>
             </Routes>
           </main>
 
-          {/* Overlays & global UI */}
           <CartDrawer />
           <Footer />
         </div>
